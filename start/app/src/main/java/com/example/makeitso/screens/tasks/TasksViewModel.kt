@@ -40,8 +40,10 @@ class TasksViewModel @Inject constructor(
   val tasks = storageService.tasks
 
   fun loadTaskOptions() {
-    //TODO
+    val hasEditOption = configurationService.isShowTaskEditButtonConfig
+    options.value = TaskActionOption.getOptions(hasEditOption)
   }
+
 
   fun onTaskCheckChange(task: Task) {
     launchCatching { storageService.update(task.copy(completed = !task.completed)) }
@@ -66,4 +68,6 @@ class TasksViewModel @Inject constructor(
   private fun onDeleteTaskClick(task: Task) {
     launchCatching { storageService.delete(task.id) }
   }
+
+
 }
